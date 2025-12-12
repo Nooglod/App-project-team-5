@@ -489,30 +489,50 @@
   /* Add this to the very bottom of your style.css */
 
 /* --- MOBILE FULL SCREEN FIX --- */
+/* --- MOBILE FULL SCREEN & NOTCH FIX --- */
 @media only screen and (max-width: 600px) {
-    
-    /* 1. Reset the body so it doesn't try to center a small box */
+
     body {
-        background-color: white;
-        display: block; /* Stop centering */
-        height: 100%;
-        width: 100%;
-        overflow: auto; /* Allow scrolling if needed */
+        /* This ensures the background behind the notch is white */
+        background-color: white; 
+        /* Prevents the whole page from bouncing */
+        overscroll-behavior-y: none; 
     }
 
-    /* 2. Force the app container to fill the screen */
     .app-container {
-        width: 100% !important;  /* Force full width */
-        height: 100vh !important; /* Force full height */
-        
-        /* Remove the "fake phone" look */
+        width: 100% !important;
+        height: 100dvh !important; /* 'dvh' handles the mobile address bar better than 'vh' */
         border: none !important;
         border-radius: 0 !important;
         box-shadow: none !important;
-        margin: 0 !important;
         
-        /* 3. Handle the iPhone Notch (Safe Areas) */
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
+        /* Reset margins/padding */
+        margin: 0 !important;
+        padding-top: env(safe-area-inset-top); /* Push content down below notch */
+        padding-bottom: 0; /* Remove bottom padding here, we handle it in content */
+        
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* FIX: Make the Navbar STICKY forever */
+    .nav-bar {
+        position: fixed; /* Stick to the glass */
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: #fcfcfc;
+        border-top: 1px solid #eee;
+        
+        /* Add padding for the iPhone Home Swipe Bar */
+        padding-bottom: calc(10px + env(safe-area-inset-bottom));
+        height: auto; /* Let it grow to fit the padding */
+    }
+    
+    /* Adjust content so it doesn't get hidden behind the sticky navbar */
+    .content {
+        /* Add extra padding at bottom = Navbar height + extra space */
+        padding-bottom: 100px !important; 
     }
 }
