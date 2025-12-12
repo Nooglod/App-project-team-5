@@ -12,11 +12,12 @@ const ICONS = {
         bell: "https://cdn-icons-png.flaticon.com/512/3602/3602145.png",
         user: "https://cdn-icons-png.flaticon.com/512/1077/1077114.png",
         back: "https://cdn-icons-png.flaticon.com/512/271/271220.png",
-        logo: "images/logo.png" // Chair icon
+        logo: "images/logo.png", // Chair icon
+        logowhite: "images/logo_white.png"
     },
     actions: {
-        starOn: "https://cdn-icons-png.flaticon.com/512/1828/1828884.png", // Yellow Star
-        starOff: "https://cdn-icons-png.flaticon.com/512/1828/1828970.png", // Empty/Gray Star
+        starOn: "images/star_yellow.png", // Yellow Star
+        starOff: "images/star_gray.png", // Empty/Gray Star
         share: "https://cdn-icons-png.flaticon.com/512/1828/1828950.png",
         check: "https://cdn-icons-png.flaticon.com/512/190/190411.png" // Success Checkmark
     }
@@ -279,8 +280,8 @@ const App = () => {
         return (
             <div className="app-container">
                 <div className="splash-screen">
-                    <img src={ICONS.header.logo} style={{width:80, height:80, marginBottom:10}} />
-                    <div className="logo-text">어디서 하냥</div>
+                    <img src={ICONS.header.logowhite} style={{width:110, height:100, marginBottom:10}} />
+
                 </div>
             </div>
         )

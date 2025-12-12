@@ -63,7 +63,7 @@
     margin-top: 20px;
   }
   /* CHANGED: Logo color to match primary blue */
-  .brand-logo { font-size: 20px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 5px; }
+  .brand-logo { font-size: 15px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 0px; }
   .header-icons { display: flex; gap: 15px; font-size: 24px; color: #333; }
   
   .search-container { position: relative; width: 100%; }
@@ -357,8 +357,8 @@
 /* --- CUSTOM ICON STYLES --- */
 
 .icon-img {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
     object-fit: contain;
     display: block;
 }
@@ -483,6 +483,6 @@
   .nav-icon { font-size: 24px; margin-bottom: 4px; }
   
   /* Splash */
-  .splash-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: white; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 200; }
+  .splash-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2c5bb8; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 200; }
   /* CHANGED: Logo text to primary blue */
   .logo-text { color: var(--primary); font-size: 24px; font-weight: bold; margin-top: 20px;}
