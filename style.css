@@ -115,7 +115,7 @@
       border: 1px solid var(--primary);
       border-radius: 15px;
       padding: 20px;
-      height: 100%; 
+    
       display: flex;
       flex-direction: column;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -535,4 +535,59 @@
         /* Add extra padding at bottom = Navbar height + extra space */
         padding-bottom: 100px !important; 
     }
+}
+/* --- CONFIRMATION MODAL STYLES --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+    z-index: 2000; /* Sit on top of everything */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    background: white;
+    width: 320px;
+    padding: 30px 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-title { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 5px; }
+.modal-sub { font-size: 14px; color: #888; margin-bottom: 10px; }
+.modal-info { font-size: 15px; color: #333; font-weight: 500; margin-bottom: 20px; }
+
+.modal-btn-row { display: flex; gap: 10px; }
+
+.btn-modal-cancel {
+    flex: 1;
+    background-color: #546e7a; /* Slate Blue from your palette */
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-modal-confirm {
+    flex: 1;
+    background-color: #227CD6; /* Green from your palette */
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
 }

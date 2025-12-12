@@ -71,6 +71,7 @@ const TAGS_EQUIP = ["화이트보드", "빔프로젝터", "모니터", "멀티 �
 // ==========================================
 
 // Common Room Card with Custom Star Image
+ // Find this component in your code
 const CommonRoomCard = ({ room, type = 'green', btn1 = '상세 보기', btn2 = '예약하기', onBtn1Click, onBtn2Click }) => {
     const [isFavorite, setIsFavorite] = React.useState(room.isFav || false);
 
@@ -81,7 +82,6 @@ const CommonRoomCard = ({ room, type = 'green', btn1 = '상세 보기', btn2 = '
 
     return (
         <div className={`search-card ${type}`}>
-            {/* Custom PNG Star Icon */}
             <img 
                 src={isFavorite ? ICONS.actions.starOn : ICONS.actions.starOff} 
                 className="star-img-btn" 
@@ -102,10 +102,16 @@ const CommonRoomCard = ({ room, type = 'green', btn1 = '상세 보기', btn2 = '
                 </div>
             </div>
             
+            {/* UPDATED BUTTON SECTION */}
             {btn1 && (
                 <div className="sc-btns">
+                    {/* If btn2 is missing, this button will automatically stretch to full width */}
                     <button className="btn-slate" onClick={(e) => { e.stopPropagation(); onBtn1Click(); }}>{btn1}</button>
-                    <button className="btn-mint" onClick={(e) => { e.stopPropagation(); onBtn2Click(); }}>{btn2}</button>
+                    
+                    {/* Only show this button if btn2 text is provided */}
+                    {btn2 && (
+                        <button className="btn-mint" onClick={(e) => { e.stopPropagation(); onBtn2Click(); }}>{btn2}</button>
+                    )}
                 </div>
             )}
         </div>
@@ -203,7 +209,7 @@ const ReservationSuccess = ({ room, onConfirm }) => {
                 </div>
 
                 <div className="detail-action-area" style={{width:'100%', marginTop:'auto'}}>
-                    <button className="btn-action-cancel" onClick={onConfirm} style={{background: '#4db6ac'}}>
+                    <button className="btn-action-cancel" onClick={onConfirm} style={{background: '#227CD6'}}>
                         확인
                     </button>
                 </div>
@@ -221,8 +227,14 @@ const App = () => {
     const [screen, setScreen] = React.useState('SPLASH');
     const [activeTab, setActiveTab] = React.useState('home');
     const [viewMode, setViewMode] = React.useState('list');
+    
+    // State for the Room being processed
     const [selectedRoom, setSelectedRoom] = React.useState(null);
-    const [showFilter, setShowFilter] = React.useState(false);
+    
+    // NEW: State for showing the Confirmation Modal
+    const [showConfirmModal, setShowConfirmModal] = React.useState(false);
+
+    const [showFilter, setShowFilter] = React.useState(false); 
     const [selectedTags, setSelectedTags] = React.useState(["개인 학습", "멀티 콘센트"]);
     const [historyTab, setHistoryTab] = React.useState('confirmed');
 
@@ -233,8 +245,8 @@ const App = () => {
     const switchTab = (tabName) => {
         setActiveTab(tabName);
         setViewMode('list'); 
-        setShowFilter(false);
         setSelectedRoom(null);
+        setShowConfirmModal(false); // Ensure modal is closed on tab switch
     };
 
     const toggleTag = (tag) => {
@@ -247,41 +259,112 @@ const App = () => {
         setViewMode('detail');
     };
 
-    const goReservation = (room) => {
+    // --- CHANGED: This now opens the Modal instead of going straight to success ---
+    const clickReserveButton = (room) => {
         setSelectedRoom(room);
-        setViewMode('success');
+        setShowConfirmModal(true); // Open the popup
     };
 
-    // --- NAVBAR WITH CUSTOM ICONS ---
-    const NavBar = () => (
-        <div className="nav-bar">
-            <div className={`nav-item ${activeTab === 'home' ? 'active' : ''}`} onClick={()=>switchTab('home')}>
-                <img src={ICONS.nav.home} className="nav-icon-img" />
-                <span>홈</span>
+    // --- NEW: This is called when user clicks "Confirm" in the popup ---
+    const handleRealReservation = () => {
+        setShowConfirmModal(false); // Close popup
+        setViewMode('success');     // Go to success screen
+    };
+
+    // --- SHARED HEADER ---
+    const CommonHeader = () => (
+        <div className="header-wrapper">
+            <div className="top-row">
+                <div className="brand-logo">
+                    <img src={ICONS.header.logo} className="icon-img" style={{marginRight:5}}/> 
+                    어디서 하냥
+                </div>
+                <div className="header-icons">
+                    <img src={ICONS.header.bell} className="icon-img" />
+                    <img src={ICONS.header.user} className="icon-img" />
+                </div>
             </div>
-            <div className={`nav-item ${activeTab === 'search' ? 'active' : ''}`} onClick={()=>switchTab('search')}>
-                <img src={ICONS.nav.search} className="nav-icon-img" />
-                <span>공간 찾기</span>
-            </div>
-            <div className={`nav-item ${activeTab === 'fav' ? 'active' : ''}`} onClick={()=>switchTab('fav')}>
-                <img src={ICONS.nav.fav} className="nav-icon-img" />
-                <span>즐겨 찾기</span>
-            </div>
-            <div className={`nav-item ${activeTab === 'history' ? 'active' : ''}`} onClick={()=>switchTab('history')}>
-                <img src={ICONS.nav.history} className="nav-icon-img" />
-                <span>예약 내역</span>
+            <div className="search-container">
+                <img src={ICONS.header.menu} className="search-icon-left icon-img" onClick={() => setShowFilter(!showFilter)} style={{cursor:'pointer'}} />
+                <input type="text" className="search-input-fancy" placeholder="검색 내용" onClick={() => setActiveTab('search')} />
+                <img src={ICONS.header.search} className="search-icon-right icon-img" />
             </div>
         </div>
     );
 
-    // --- RENDER LOGIC ---
+    // --- SHARED FILTER ---
+    const GlobalFilterOverlay = () => (
+        <div className="filter-overlay">
+            <div className="filter-box">
+                <div className="filter-title-main">세부 필터</div>
+                <div className="filter-category-title">사용 목적</div>
+                <div className="filter-tags-grid">
+                    {TAGS_PURPOSE.map(tag => (
+                        <div key={tag} className={`filter-chip-btn ${selectedTags.includes(tag)?'active':''}`} onClick={()=>toggleTag(tag)}>{tag}</div>
+                    ))}
+                </div>
+                <div className="filter-category-title">설비 여부</div>
+                <div className="filter-tags-grid">
+                    {TAGS_EQUIP.map(tag => (
+                        <div key={tag} className={`filter-chip-btn ${selectedTags.includes(tag)?'active':''}`} onClick={()=>toggleTag(tag)}>{tag}</div>
+                    ))}
+                </div>
+                <div className="filter-actions-row">
+                    <button className="btn-filter-reset" onClick={()=>setSelectedTags([])}>필터 초기화</button>
+                    <button className="btn-filter-apply" onClick={()=>setShowFilter(false)}>적용하기</button>
+                </div>
+            </div>
+        </div>
+    );
+
+    // --- NEW: CONFIRMATION MODAL COMPONENT ---
+    const ConfirmationModal = () => {
+        if (!selectedRoom) return null;
+        return (
+            <div className="modal-overlay">
+                <div className="modal-box">
+                    <div className="modal-title">예약 하시겠습니까?</div>
+                    <div className="modal-sub">(유의사항 안내문)</div>
+                    
+                    {/* Display Dynamic Data from the selected room */}
+                    <div className="modal-info">
+                        2025.10.21 / {selectedRoom.time || "12:00"} / 4명<br/>
+                        {selectedRoom.title}
+                    </div>
+
+                    <div className="modal-btn-row">
+                        <button className="btn-modal-cancel" onClick={() => setShowConfirmModal(false)}>취소</button>
+                        <button className="btn-modal-confirm" onClick={handleRealReservation}>확인</button>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const NavBar = () => (
+        <div className="nav-bar">
+            <div className={`nav-item ${activeTab === 'home' ? 'active' : ''}`} onClick={()=>switchTab('home')}>
+                <img src={ICONS.nav.home} className="nav-icon-img" /><span>홈</span>
+            </div>
+            <div className={`nav-item ${activeTab === 'search' ? 'active' : ''}`} onClick={()=>switchTab('search')}>
+                <img src={ICONS.nav.search} className="nav-icon-img" /><span>공간 찾기</span>
+            </div>
+            <div className={`nav-item ${activeTab === 'fav' ? 'active' : ''}`} onClick={()=>switchTab('fav')}>
+                <img src={ICONS.nav.fav} className="nav-icon-img" /><span>즐겨 찾기</span>
+            </div>
+            <div className={`nav-item ${activeTab === 'history' ? 'active' : ''}`} onClick={()=>switchTab('history')}>
+                <img src={ICONS.nav.history} className="nav-icon-img" /><span>예약 내역</span>
+            </div>
+        </div>
+    );
+
+    // --- MAIN RENDER LOGIC ---
 
     if(screen === 'SPLASH') {
         return (
             <div className="app-container">
                 <div className="splash-screen">
                     <img src={ICONS.header.logowhite} style={{width:110, height:100, marginBottom:10}} />
-
                 </div>
             </div>
         )
@@ -294,143 +377,89 @@ const App = () => {
     if (viewMode === 'detail' && selectedRoom) {
         return (
             <div className="app-container">
+                {/* Need to pass the clickReserveButton to DetailView as well if you have a reserve button there */}
                 <DetailView 
                     room={selectedRoom} 
                     onBack={() => setViewMode('list')} 
-                    onReserve={() => setViewMode('success')} 
+                    onReserve={() => clickReserveButton(selectedRoom)} 
                 />
+                
+                {/* Add Modal Here too so it works inside Detail View */}
+                {showConfirmModal && <ConfirmationModal />}
+                
                 <NavBar />
             </div>
         );
     }
 
     // --- TAB CONTENT ---
-    let content;
+    let tabContent;
 
     if (activeTab === 'search') {
-        content = (
+        tabContent = (
             <>
-                <div className="header-wrapper">
-                    <div className="top-row">
-                        <div className="brand-logo">
-                            <img src={ICONS.header.logo} className="icon-img" style={{marginRight:5}}/> 
-                            어디서 하냥
-                        </div>
-                    </div>
-                    <div className="search-container">
-                        <img src={ICONS.header.menu} className="search-icon-left icon-img" onClick={() => setShowFilter(!showFilter)} />
-                        <input type="text" className="search-input-fancy" placeholder="검색 내용" onClick={() => setActiveTab('search')} />
-                        <img src={ICONS.header.search} className="search-icon-right icon-img" />
-                    </div>
-                    
-                </div>
-                <div className="content">
-                    {showFilter ? (
-                        <div className="filter-overlay">
-                            <div className="filter-box">
-                                <div className="filter-title-main">세부 필터</div>
-                                <div className="filter-category-title">사용 목적</div>
-                                <div className="filter-tags-grid">{TAGS_PURPOSE.map(tag=><div key={tag} className={`filter-chip-btn ${selectedTags.includes(tag)?'active':''}`} onClick={()=>toggleTag(tag)}>{tag}</div>)}</div>
-                                <div className="filter-category-title">설비 여부</div>
-                                <div className="filter-tags-grid">{TAGS_EQUIP.map(tag=><div key={tag} className={`filter-chip-btn ${selectedTags.includes(tag)?'active':''}`} onClick={()=>toggleTag(tag)}>{tag}</div>)}</div>
-                                <div className="filter-actions-row"><button className="btn-filter-reset" onClick={()=>setSelectedTags([])}>필터 초기화</button><button className="btn-filter-apply" onClick={()=>setShowFilter(false)}>적용하기</button></div>
-                            </div>
-                        </div>
-                    ) : (
-                        <>
-                            <div className="search-section-title"><span>대체 공간 추천</span><span className="sort-badge">정렬 기능</span></div>
-                            {SEARCH_ALT_ROOMS.map(room => (
-                                <CommonRoomCard 
-                                    key={room.id} room={room} type="blue" 
-                                    onBtn1Click={() => goDetail(room)} 
-                                    onBtn2Click={() => goReservation(room)} 
-                                />
-                            ))}
-                            <div className="search-section-title" style={{marginTop:'10px'}}><span>가능한 공간 리스트</span></div>
-                            {SEARCH_LIST_ROOMS.map(room => (
-                                <CommonRoomCard 
-                                    key={room.id} room={room} type="green" 
-                                    onBtn1Click={() => goDetail(room)} 
-                                    onBtn2Click={() => goReservation(room)} 
-                                />
-                            ))}
-                            <button className="btn-more-wide">더 보기</button>
-                        </>
-                    )}
-                </div>
+                <div className="search-section-title"><span>대체 공간 추천</span><span className="sort-badge">정렬 기능</span></div>
+                {SEARCH_ALT_ROOMS.map(room => (
+                    <CommonRoomCard 
+                        key={room.id} room={room} type="blue" 
+                        onBtn1Click={() => goDetail(room)} 
+                        onBtn2Click={() => clickReserveButton(room)} 
+                    />
+                ))}
+                <div className="search-section-title" style={{marginTop:'10px'}}><span>가능한 공간 리스트</span></div>
+                {SEARCH_LIST_ROOMS.map(room => (
+                    <CommonRoomCard 
+                        key={room.id} room={room} type="green" 
+                        onBtn1Click={() => goDetail(room)} 
+                        onBtn2Click={() => clickReserveButton(room)} 
+                    />
+                ))}
+                <button className="btn-more-wide">더 보기</button>
             </>
         );
 
     } else if (activeTab === 'fav') {
-        content = (
+        tabContent = (
             <>
-                <div className="header-wrapper">
-                    <div className="top-row">
-                        <div className="brand-logo">
-                            <img src={ICONS.header.logo} className="icon-img" style={{marginRight:5}}/> 
-                            어디서 하냥
-                        </div>
-                    </div>
-                    <div className="search-container">
-                    <div className="search-container">
-                        <img src={ICONS.header.menu} className="search-icon-left icon-img" onClick={() => setShowFilter(!showFilter)} />
-                        <input type="text" className="search-input-fancy" placeholder="검색 내용" onClick={() => setActiveTab('search')} />
-                        <img src={ICONS.header.search} className="search-icon-right icon-img" />
-                    </div>
-                    </div>
-                </div>
-                <div className="content">
-                    <div className="fav-section-label">즐겨찾기</div>
-                    {SEARCH_ALT_ROOMS.map(room => (
+                <div className="fav-section-label">즐겨찾기</div>
+                {SEARCH_ALT_ROOMS.map(room => (
+                    <CommonRoomCard 
+                        key={room.id} room={{...room, isFav: true}} type="blue" 
+                        onBtn1Click={() => goDetail(room)} 
+                        onBtn2Click={() => clickReserveButton(room)} 
+                    />
+                ))}
+                <div className="recent-section-label">최근 사용</div>
+                <div style={{marginTop:'10px'}}>
+                    {RECENT_USAGE_DATA.map(room => (
                         <CommonRoomCard 
-                            key={room.id} room={{...room, isFav: true}} type="blue" 
+                            key={room.id} room={{...room, label: 'recent'}} type="green" 
                             onBtn1Click={() => goDetail(room)} 
-                            onBtn2Click={() => goReservation(room)} 
+                            onBtn2Click={() => clickReserveButton(room)} 
                         />
                     ))}
-                    <div className="recent-section-label">최근 사용</div>
-                    <div style={{marginTop:'10px'}}>
-                        {RECENT_USAGE_DATA.map(room => (
-                            <CommonRoomCard 
-                                key={room.id} room={{...room, label: 'recent'}} type="green" 
-                                onBtn1Click={() => goDetail(room)} 
-                                onBtn2Click={() => goReservation(room)} 
-                            />
-                        ))}
-                    </div>
-                    <button className="btn-more-wide">더 보 기</button>
                 </div>
+                <button className="btn-more-wide">더 보기</button>
             </>
         );
 
     } else if (activeTab === 'history') {
-        content = (
+        tabContent = (
             <>
-                <div className="header-wrapper">
-                    <div className="top-row">
-                        <div className="brand-logo">
-                            <img src={ICONS.header.logo} className="icon-img" style={{marginRight:5}}/> 
-                            어디서 하냥
-                        </div>
-                    </div>
-                    <div className="search-container">
-                        <img src={ICONS.header.menu} className="search-icon-left icon-img" onClick={() => setShowFilter(!showFilter)} />
-                        <input type="text" className="search-input-fancy" placeholder="검색 내용" onClick={() => setActiveTab('search')} />
-                        <img src={ICONS.header.search} className="search-icon-right icon-img" />
-                    </div>
-                </div>
                 <div className="history-tabs">
                     <div className={`history-tab-item ${historyTab === 'confirmed' ? 'active' : ''}`} onClick={()=>setHistoryTab('confirmed')}>예약 확인</div>
                     <div className={`history-tab-item ${historyTab === 'canceled' ? 'active' : ''}`} onClick={()=>setHistoryTab('canceled')}>예약 취소</div>
                 </div>
-                <div className="content" style={{paddingTop:'10px'}}>
+                <div className="content-inner" style={{paddingTop:'10px'}}> 
                     {historyTab === 'confirmed' ? (
                         HISTORY_CONFIRMED.map(room => (
                             <CommonRoomCard 
                                 key={room.id} room={room} type="green" 
-                                btn1="상세 보기" btn2="예약 취소"
+                                // Only showing Button 1 (Details)
+                                btn1="상세 보기" 
+                                // Removing Button 2
+                                btn2={null}
                                 onBtn1Click={() => goDetail(room)} 
-                                onBtn2Click={() => alert('예약 취소 기능은 준비중입니다.')} 
                             />
                         ))
                     ) : (
@@ -442,52 +471,36 @@ const App = () => {
 
     } else {
         // HOME TAB
-        content = (
+        tabContent = (
             <>
-                <div className="header-wrapper">
-                    <div className="top-row">
-                        <div className="brand-logo">
-                            <img src={ICONS.header.logo} className="icon-img" style={{marginRight:5}} /> 
-                            어디서 하냥
-                        </div>
-                        <div className="header-icons">
-                            <img src={ICONS.header.bell} className="icon-img" />
-                            <img src={ICONS.header.user} className="icon-img" />
-                        </div>
-                    </div>
-                    <div className="search-container">
-                        <img src={ICONS.header.menu} className="search-icon-left icon-img" onClick={() => setShowFilter(!showFilter)} />
-                        <input type="text" className="search-input-fancy" placeholder="검색 내용" onClick={() => setActiveTab('search')} />
-                        <img src={ICONS.header.search} className="search-icon-right icon-img" />
-                    </div>
-                </div>
-                <div className="content">
-                    <div className="horizontal-section">
-                        <div className="section-header-row"><span className="see-more">더보기</span></div>
-                        <div className="horizontal-scroll">{RECENT_ROOMS.map(room => (
-                            <div key={room.id} className="mini-card">
-                                <div className="mini-card-img">
-                                    <img src={room.image} style={{width:'100%', height:'100%', objectFit:'cover'}} />
-                                    <img src={room.isFav ? ICONS.actions.starOn : ICONS.actions.starOff} className="mini-fav-icon" style={{width:20, height:20}} />
-                                    {room.label && <div style={{position:'absolute', top:10, right:30, background:'rgba(255,255,255,0.8)', fontSize:'10px', padding:'2px 4px', borderRadius:'2px'}}>{room.label}</div>}
-                                </div>
-                                <div className="mini-card-info"><div className="mini-card-title">{room.title}</div><button className="btn-mini-reserve" onClick={() => goReservation(room)}>예약하기</button></div>
+                <div className="horizontal-section">
+                    <div className="section-header-row"><span className="see-more">더보기</span></div>
+                    <div className="horizontal-scroll">{RECENT_ROOMS.map(room => (
+                        <div key={room.id} className="mini-card">
+                            <div className="mini-card-img">
+                                <img src={room.image} style={{width:'100%', height:'100%', objectFit:'cover'}} />
+                                <img src={room.isFav ? ICONS.actions.starOn : ICONS.actions.starOff} className="mini-fav-icon" style={{width:20, height:20}} />
+                                {room.label && <div style={{position:'absolute', top:10, right:30, background:'rgba(255,255,255,0.8)', fontSize:'10px', padding:'2px 4px', borderRadius:'2px'}}>{room.label}</div>}
                             </div>
-                        ))}</div>
-                    </div>
-                    <div className="date-section">
-                        <div className="year-month">2025.10</div>
-                        <div className="week-row">{WEEK_DAYS.map((d, i) => (<div key={i} className={`day-item ${d.isSelected ? 'selected' : ''}`}><span className={`day-name ${d.isRed?'red':''} ${d.isBlue?'blue':''}`}>{d.day}</span><span className="day-number">{d.date}</span></div>))}</div>
-                    </div>
-                    <div className="list-section">
-                        {HOME_LIST_ROOMS.map(room => (
-                            <CommonRoomCard 
-                                key={room.id} room={room} type="green" 
-                                onBtn1Click={() => goDetail(room)} 
-                                onBtn2Click={() => goReservation(room)} 
-                            />
-                        ))}
-                    </div>
+                            <div className="mini-card-info">
+                                <div className="mini-card-title">{room.title}</div>
+                                <button className="btn-mini-reserve" onClick={() => clickReserveButton(room)}>예약하기</button>
+                            </div>
+                        </div>
+                    ))}</div>
+                </div>
+                <div className="date-section">
+                    <div className="year-month">2025.10</div>
+                    <div className="week-row">{WEEK_DAYS.map((d, i) => (<div key={i} className={`day-item ${d.isSelected ? 'selected' : ''}`}><span className={`day-name ${d.isRed?'red':''} ${d.isBlue?'blue':''}`}>{d.day}</span><span className="day-number">{d.date}</span></div>))}</div>
+                </div>
+                <div className="list-section">
+                    {HOME_LIST_ROOMS.map(room => (
+                        <CommonRoomCard 
+                            key={room.id} room={room} type="green" 
+                            onBtn1Click={() => goDetail(room)} 
+                            onBtn2Click={() => clickReserveButton(room)} 
+                        />
+                    ))}
                 </div>
             </>
         );
@@ -495,11 +508,19 @@ const App = () => {
 
     return (
         <div className="app-container">
-            {content}
+            <CommonHeader />
+            
+            <div className="content">
+                {showFilter && <GlobalFilterOverlay />}
+                {showConfirmModal && <ConfirmationModal />}
+                {tabContent}
+            </div>
+            
             <NavBar />
         </div>
     );
 };
 
+// --- RENDER THE APP TO THE DOM ---
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
