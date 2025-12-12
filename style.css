@@ -1,15 +1,19 @@
 /* style.css */
 :root {
-    --primary: #4db6ac; /* Mint Green */
-    --primary-dark: #00897b;
+    /* CHANGED: Updated from Mint Green to the App Blue from the screenshot */
+    --primary: #4a80f0; 
+    --primary-dark: #2c5bb8;
+    
     --bg-gray: #f8f9fa;
     --text-dark: #333;
     --text-gray: #888;
     --red-alert: #e53935;
     --white: #ffffff;
     --slate-btn: #546e7a;
-    --light-blue-bg: #e0f7fa;
-    --light-mint-bg: #e0f2f1;
+    
+    /* CHANGED: Adjusted backgrounds to match the blue theme */
+    --light-blue-bg: #eef6fc;
+    --light-mint-bg: #e3f2fd; /* Now a very light blue instead of mint */
   }
   
   * {
@@ -47,7 +51,7 @@
   .header-wrapper {
     background: white;
     padding: 10px 20px;
-    z-index: 20; /* High z-index to stay above content */
+    z-index: 20; 
     border-bottom: 1px solid #f0f0f0;
     position: relative;
   }
@@ -58,14 +62,16 @@
     margin-bottom: 15px;
     margin-top: 20px;
   }
-  .brand-logo { font-size: 20px; font-weight: 800; color: #3b8491; display: flex; align-items: center; gap: 5px; }
+  /* CHANGED: Logo color to match primary blue */
+  .brand-logo { font-size: 20px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 5px; }
   .header-icons { display: flex; gap: 15px; font-size: 24px; color: #333; }
   
   .search-container { position: relative; width: 100%; }
   .search-input-fancy {
     width: 100%;
     padding: 10px 40px;
-    border: 1px solid #4db6ac;
+    /* CHANGED: Border color to primary blue */
+    border: 1px solid var(--primary);
     border-radius: 4px;
     font-size: 14px;
     outline: none;
@@ -79,7 +85,7 @@
     color: #666;
     font-size: 18px;
     cursor: pointer;
-    z-index: 30; /* Ensure clickable */
+    z-index: 30; 
   }
   .search-icon-left { left: 10px; font-size: 20px; }
   .search-icon-right { right: 10px; }
@@ -94,21 +100,22 @@
   }
   .content::-webkit-scrollbar { display: none; }
   
-  /* --- FILTER OVERLAY STYLES (IMPORTANT) --- */
+  /* --- FILTER OVERLAY STYLES --- */
   .filter-overlay {
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0; /* Cover the entire content area */
-      background: rgba(255,255,255,0.95); /* Opaque background */
-      z-index: 50; /* Sit on top of search results */
+      top: 0; left: 0; right: 0; bottom: 0; 
+      background: rgba(255,255,255,0.95); 
+      z-index: 50; 
       padding: 15px;
   }
   
   .filter-box {
       background: white;
-      border: 1px solid #4db6ac; /* The Green Border from image */
+      /* CHANGED: Border color to primary blue */
+      border: 1px solid var(--primary);
       border-radius: 15px;
       padding: 20px;
-      height: 100%; /* Fill the overlay */
+      height: 100%; 
       display: flex;
       flex-direction: column;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -140,16 +147,17 @@
       border-radius: 20px;
       font-size: 12px;
       border: 1px solid #ddd;
-      background: #e0e0e0; /* Gray default */
+      background: #e0e0e0; 
       color: #555;
       cursor: pointer;
       transition: 0.2s;
   }
   
+  /* CHANGED: Active chip color from Green to Primary Blue */
   .filter-chip-btn.active {
-      background: #66bb6a; /* Green active */
+      background: var(--primary);
       color: white;
-      border-color: #66bb6a;
+      border-color: var(--primary);
   }
   
   .filter-actions-row {
@@ -171,7 +179,7 @@
   /* --- DETAIL PAGE STYLES --- */
 .detail-content-wrapper {
     padding: 20px;
-    padding-bottom: 90px; /* Space for bottom buttons + nav */
+    padding-bottom: 90px; 
 }
 
 /* Header & Top Section */
@@ -195,7 +203,8 @@
     justify-content: flex-start;
 }
 .detail-room-name-badge {
-    background: #e0f2f1;
+    /* CHANGED: Light background variable now points to light blue */
+    background: var(--light-mint-bg);
     color: #333;
     padding: 8px 12px;
     border-radius: 6px;
@@ -220,7 +229,7 @@
 /* Section Labels */
 .detail-section-label {
     display: inline-block;
-    background: #546e7a; /* Slate Blue */
+    background: #546e7a; 
     color: white;
     padding: 6px 12px;
     border-radius: 4px;
@@ -260,9 +269,10 @@
     color: #333;
 }
 
-/* Tags (Green) */
+/* Tags */
 .fac-tag {
-    background: #4db6ac; /* Mint */
+    /* CHANGED: Tag background to primary blue */
+    background: var(--primary);
     color: white;
     padding: 6px 10px;
     border-radius: 20px;
@@ -273,7 +283,7 @@
 
 /* Bubbles (Slate) */
 .env-bubble {
-    background: #546e7a; /* Slate */
+    background: #546e7a; 
     color: white;
     padding: 8px 10px;
     border-radius: 20px;
@@ -331,8 +341,7 @@
 }
 /* --- STAR STYLES --- */
 .search-card {
-    position: relative; /* Needed for absolute positioning of star */
-    /* ... existing styles ... */
+    position: relative; 
 }
 
 .star-icon-btn {
@@ -341,13 +350,12 @@
     right: 10px;
     font-size: 22px;
     cursor: pointer;
-    z-index: 10; /* Ensure it's above the image/text */
-    color: #ccc; /* Default gray */
+    z-index: 10; 
+    color: #ccc; 
     transition: color 0.2s;
 }
 /* --- CUSTOM ICON STYLES --- */
 
-/* General Icon Image Class */
 .icon-img {
     width: 24px;
     height: 24px;
@@ -355,32 +363,27 @@
     display: block;
 }
 
-/* Specific size for the Hamburger menu */
 .menu-icon-img {
     width: 24px;
     height: 24px;
     cursor: pointer;
 }
 
-/* Specific size for Bottom Nav Icons */
 .nav-icon-img {
     width: 24px;
     height: 24px;
     margin-bottom: 4px;
     object-fit: contain;
-    /* Optional: Grayscale for inactive, color for active */
     filter: grayscale(100%); 
     opacity: 0.5;
     transition: 0.2s;
 }
 
-/* Active state for Nav Icons (Full color) */
 .nav-item.active .nav-icon-img {
     filter: grayscale(0%);
     opacity: 1;
 }
 
-/* Star Icon in Cards */
 .star-img-btn {
     position: absolute;
     top: 15px;
@@ -392,17 +395,17 @@
     object-fit: contain;
 }
 
-/* Back Button */
 .back-icon-img {
     width: 20px;
     height: 20px;
     cursor: pointer;
 }
 .star-icon-btn.active {
-    color: #ffca28; /* Yellow/Orange when active */
+    color: #ffca28; 
 }
   .btn-filter-reset { background: #e0e0e0; color: #333; }
-  .btn-filter-apply { background: #4db6ac; color: white; }
+  /* CHANGED: Apply button to primary blue */
+  .btn-filter-apply { background: var(--primary); color: white; }
   
   /* --- OTHER COMPONENTS --- */
   .horizontal-section { background: #eef6f7; padding: 20px; position: relative; }
@@ -415,7 +418,8 @@
   .mini-card-img { height: 100px; width: 100%; object-fit: cover; background: #eee; position: relative; }
   .mini-card-info { padding: 10px; display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
   .mini-card-title { font-size: 13px; font-weight: bold; color: #333; margin-bottom: 10px; line-height: 1.3; }
-  .btn-mini-reserve { background: #4db6ac; color: white; border: none; border-radius: 4px; padding: 8px 0; font-size: 12px; font-weight: bold; width: 100%; cursor: pointer; }
+  /* CHANGED: Reserve button to primary blue */
+  .btn-mini-reserve { background: var(--primary); color: white; border: none; border-radius: 4px; padding: 8px 0; font-size: 12px; font-weight: bold; width: 100%; cursor: pointer; }
   .mini-fav-icon { position: absolute; top: 8px; right: 8px; color: orange; font-size: 16px; }
   
   /* Calendar & List */
@@ -427,7 +431,8 @@
   .day-name.red { color: #e57373; }
   .day-name.blue { color: #64b5f6; }
   .day-number { font-size: 14px; font-weight: bold; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 6px; }
-  .day-item.selected .day-number { background: white; border: 2px solid #4db6ac; color: #333; }
+  /* CHANGED: Selected day border/text to primary blue */
+  .day-item.selected .day-number { background: white; border: 2px solid var(--primary); color: #333; }
   .day-item.selected .day-name { font-weight: bold; }
   
   .list-card { background: #eef6f7; border-radius: 10px; padding: 10px; display: flex; gap: 12px; margin-bottom: 15px; }
@@ -443,6 +448,7 @@
   .sort-badge { background: #90a4ae; color: white; font-size: 10px; padding: 3px 8px; border-radius: 12px; cursor: pointer; }
   .search-card { margin: 10px 20px; padding: 15px; border-radius: 12px; display: flex; flex-direction: column; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
   .search-card.blue { background-color: var(--light-blue-bg); }
+  /* CHANGED: Green card background to light blue/mint variable */
   .search-card.green { background-color: var(--light-mint-bg); }
   .sc-top { display: flex; gap: 12px; margin-bottom: 12px; }
   .sc-img { width: 90px; height: 90px; border-radius: 8px; background: #ccc; object-fit: cover; }
@@ -450,6 +456,7 @@
   .sc-title { font-weight: bold; font-size: 14px; margin-bottom: 2px; color: #222; }
   .sc-btns { display: flex; gap: 10px; }
   .btn-slate { flex: 1; background: var(--slate-btn); color: white; border: none; padding: 8px; border-radius: 5px; font-weight: bold; font-size: 12px; cursor: pointer; }
+  /* CHANGED: Mint button to primary blue */
   .btn-mint { flex: 1; background: var(--primary); color: white; border: none; padding: 8px; border-radius: 5px; font-weight: bold; font-size: 12px; cursor: pointer; }
   .btn-more-wide { width: 90%; margin: 10px auto 20px auto; display: block; background: #e0e0e0; color: #555; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
   
@@ -477,4 +484,5 @@
   
   /* Splash */
   .splash-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: white; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 200; }
+  /* CHANGED: Logo text to primary blue */
   .logo-text { color: var(--primary); font-size: 24px; font-weight: bold; margin-top: 20px;}
