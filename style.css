@@ -462,7 +462,7 @@
   
   /* Favorites / History Headers */
   .fav-header-simple, .history-header {
-      padding: 15px 20px; font-size: 18px; font-weight: bold; text-align: center; position: relative; background: white;
+    margin-top: 30px; padding: 15px 20px; font-size: 18px; font-weight: bold; text-align: center; position: relative; background: white;
   }
   .fav-header-simple .back-icon, .history-header .back-icon { position: absolute; left: 20px; cursor: pointer; font-size: 20px; }
   .fav-section-label, .recent-section-label { padding: 20px 20px 10px 20px; font-size: 16px; font-weight: bold; color: #333; }
