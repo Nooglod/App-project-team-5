@@ -28,34 +28,132 @@ const ICONS = {
 // ==========================================
 
 const RECENT_ROOMS = [
-    { id: 101, title: "학생복지관 3층 Exchange Box", image: "images/example1.png", isFav: true },
-    { id: 102, title: "제1공학관 1층 해동스터디룸 4호", image: "images/example2.png", isFav: false, label: "최근 사용" },
-    { id: 103, title: "HIT 2층 대회의실", image: "images/example3.png", isFav: false }
+    { 
+        id: 101, 
+        title: "학생복지관 3층 Exchange Box", 
+        image: "images/example6.png", // Glass door room
+        isFav: true 
+    },
+    { 
+        id: 102, 
+        title: "제1공학관 1층 해동스터디룸 4호", 
+        image: "images/example5.png", // Window side table
+        isFav: false, 
+        label: "최근 사용" 
+    },
+    { 
+        id: 103, 
+        title: "HIT 2층 대회의실", 
+        image: "images/example2.png", // Used generic conference room image
+        isFav: false 
+    }
 ];
 
 const HOME_LIST_ROOMS = [
-    { id: 201, title: "제1공학관 1층 해동스터디룸 4호", timeRange: "10:30 ~ 12:00", maxTime: "최대 2시간", extend: "불가", penalty: "있음", projector: "없음", image: "images/example4.png" },
-    { id: 202, title: "백남학술정보관 1층 캐리어홀", timeRange: "13:00 ~ 15:00", maxTime: "최대 3시간", extend: "가능", penalty: "없음", projector: "있음", image: "images/example1.png" }
+    { 
+        id: 201, 
+        title: "제1공학관 1층 해동스터디룸 4호", 
+        timeRange: "10:30 ~ 12:00", 
+        maxTime: "최대 2시간", 
+        extend: "불가", 
+        penalty: "있음", 
+        projector: "없음", 
+        image: "images/example5.png" 
+    },
+    { 
+        id: 202, 
+        title: "백남학술정보관 1층 캐리어홀", 
+        timeRange: "13:00 ~ 15:00", 
+        maxTime: "최대 3시간", 
+        extend: "가능", 
+        penalty: "없음", 
+        projector: "있음", 
+        image: "images/example1.png" // Mapped to Career Room style image
+    }
 ];
 
 const SEARCH_ALT_ROOMS = [
-    { id: 301, title: "학술정보관 1층 커리어 룸", capacity: "수용 인원: 최대 5명", time: "이용 가능 시간대: 12:00 ~ 14:00", equip: "장비: 빔프로젝터 O, 멀티콘센트 O", image: "images/example2.png" },
-    { id: 302, title: "학술정보관 4층 그룹스터디룸", capacity: "수용 인원: 최대 8명", time: "이용 가능 시간대: 12:00 ~ 16:00", equip: "장비: 빔프로젝터 O, 멀티콘센트 O", image: "images/example3.png" }
+    { 
+        id: 301, 
+        title: "학술정보관 1층 커리어 룸", 
+        capacity: "수용 인원: 최대 5명", 
+        time: "이용 가능 시간대: 12:00 ~ 14:00", 
+        equip: "장비: 빔프로젝터 O, 멀티콘센트 O", 
+        image: "images/example1.png", // Orange wall room
+        isFav: true
+    },
+    { 
+        id: 302, 
+        title: "학술정보관 4층 그룹스터디룸", 
+        capacity: "수용 인원: 최대 8명", 
+        time: "이용 가능 시간대: 12:00 ~ 16:00", 
+        equip: "장비: 빔프로젝터 O, 멀티콘센트 O", 
+        image: "images/example2.png", // White table room
+        isFav: true
+    }
 ];
 
 const SEARCH_LIST_ROOMS = [
-    { id: 401, title: "제1공학관 105호(PBL강의실)", capacity: "수용 인원: 최대 30명", time: "이용 가능 시간대: 13:00 ~ 18:00", equip: "장비: 빔프로젝터 O, 멀티콘센트 X", image: "images/example4.png" },
-    { id: 402, title: "창업교육센터 Knowledge Bunker", capacity: "수용 인원: 최대 6명", time: "이용 가능 시간대: 09:00 ~ 18:00", equip: "장비: 빔프로젝터 O, 멀티콘센트 O", image: "images/example1.png" }
+    { 
+        id: 401, 
+        title: "제1공학관 105호(PBL강의실)", 
+        capacity: "수용 인원: 최대 30명", 
+        time: "이용 가능 시간대: 13:00 ~ 18:00", 
+        equip: "장비: 빔프로젝터 O, 멀티콘센트 X", 
+        image: "images/example3.png", // Large room with round tables
+        isFav: false 
+    },
+    { 
+        id: 402, 
+        title: "창업교육센터 Knowledge Bunker", 
+        capacity: "수용 인원: 최대 6명", 
+        time: "이용 가능 시간대: 09:00 ~ 18:00", 
+        equip: "장비: 빔프로젝터 O, 멀티콘센트 O", 
+        image: "images/example4.png", // TV on brick wall
+        isFav: false 
+    }
 ];
 
 const RECENT_USAGE_DATA = [
-    { id: 901, title: "제1공학관 105호(PBL강의실)", capacity: "수용 인원: 최대 30명", time: "이용 가능 시간대: 13:00 ~ 18:00", equip: "장비: 빔프로젝터 O, 멀티콘센트 X", image: "images/example2.png" },
-    { id: 902, title: "창업교육센터 Knowledge Bunker", capacity: "수용 인원: 최대 6명", time: "이용 가능 시간대: 09:00 ~ 18:00", equip: "장비: 빔프로젝터 O, 멀티콘센트 O", image: "images/example3.png" }
+    { 
+        id: 901, 
+        title: "제1공학관 105호(PBL강의실)", 
+        capacity: "수용 인원: 최대 30명", 
+        time: "이용 가능 시간대: 13:00 ~ 18:00", 
+        equip: "장비: 빔프로젝터 O, 멀티콘센트 X", 
+        image: "images/example3.png", 
+        isFav: false 
+    },
+    { 
+        id: 902, 
+        title: "창업교육센터 Knowledge Bunker", 
+        capacity: "수용 인원: 최대 6명", 
+        time: "이용 가능 시간대: 09:00 ~ 18:00", 
+        equip: "장비: 빔프로젝터 O, 멀티콘센트 O", 
+        image: "images/example4.png", 
+        isFav: false 
+    }
 ];
 
 const HISTORY_CONFIRMED = [
-    { id: 501, title: "제1공학관 105호(PBL강의실)", capacity: "수용 인원: 최대 30명", time: "이용 가능 시간대: 13:00 ~ 18:00", equip: "장비: 빔프로젝터 O, 멀티콘센트 X", image: "images/example4.png", isFav: true },
-    { id: 502, title: "창업교육센터 Knowledge Bunker", capacity: "수용 인원: 최대 6명", time: "이용 가능 시간대: 09:00 ~ 18:00", equip: "장비: 빔프로젝터 O, 멀티콘센트 O", image: "images/example1.png", isFav: true }
+    { 
+        id: 501, 
+        title: "제1공학관 105호(PBL강의실)", 
+        capacity: "수용 인원: 최대 30명", 
+        time: "이용 가능 시간대: 13:00 ~ 18:00", 
+        equip: "장비: 빔프로젝터 O, 멀티콘센트 X", 
+        image: "images/example3.png", 
+        isFav: true 
+    },
+    { 
+        id: 502, 
+        title: "창업교육센터 Knowledge Bunker", 
+        capacity: "수용 인원: 최대 6명", 
+        time: "이용 가능 시간대: 09:00 ~ 18:00", 
+        equip: "장비: 빔프로젝터 O, 멀티콘센트 O", 
+        image: "images/example4.png", 
+        isFav: true 
+    }
 ];
 
 const WEEK_DAYS = [
@@ -64,7 +162,6 @@ const WEEK_DAYS = [
 
 const TAGS_PURPOSE = ["전체", "팀 프로젝트", "개인 학습", "동아리 활동", "면접/발표 연습", "기타"];
 const TAGS_EQUIP = ["화이트보드", "빔프로젝터", "모니터", "멀티 콘센트", "기타"];
-
 
 // ==========================================
 // 2. REUSABLE COMPONENTS
