@@ -308,7 +308,13 @@ const CommonHeader = ({ searchQuery, setSearchQuery, setActiveTab, setViewMode, 
                 }}
                 onClick={() => { setActiveTab('search'); setViewMode('list'); }}
             />
-            <img src={ICONS.header.search} className="search-icon-right icon-img" />
+            {/* ADDED onClick HERE */}
+            <img 
+                src={ICONS.header.search} 
+                className="search-icon-right icon-img" 
+                style={{cursor: 'pointer'}}
+                onClick={() => { setActiveTab('search'); setViewMode('list'); }} 
+            />
         </div>
     </div>
 );
@@ -445,7 +451,6 @@ const App = () => {
     if (viewMode === 'success' && selectedRoom) return <ReservationSuccess room={selectedRoom} onConfirm={() => switchTab('home')} />;
     if (viewMode === 'canceled' && selectedRoom) return <ReservationCanceled room={selectedRoom} onConfirm={() => switchTab('history')} />;
     
-
     if (viewMode === 'detail' && selectedRoom) {
         return (
             <div className="app-container">
@@ -454,7 +459,7 @@ const App = () => {
                     onBack={() => setViewMode('list')} 
                     onReserve={activeTab === 'history' ? () => handleCancelReservation() : () => clickReserveButton(selectedRoom)} 
                     isFromHistory={activeTab === 'history'}
-                    activeTab={activeTab}  // <--- ADD THIS LINE
+                    activeTab={activeTab}
                 />
                 {showConfirmModal && <ConfirmationModal />}
                 <NavBar />
@@ -467,7 +472,7 @@ const App = () => {
     // --- TABS ---
     if (activeTab === 'search') {
         if (!searchQuery.trim()) {
-            // Recent Searches
+            // Recent Searches (No query yet)
             tabContent = (
                 <>
                     <div className="recent-search-header"><div className="recent-search-title">최근 검색 장소</div><div className="recent-search-delete-all">전체 삭제</div></div>
@@ -481,10 +486,13 @@ const App = () => {
                 </>
             );
         } else {
-            // Search Results (Dynamic Filtering)
-            const filteredAlt = SEARCH_ALT_ROOMS.filter(r => r.title.includes(searchQuery));
+            // Search Results
+            // LOGIC UPDATED: Always show ALT rooms as "Recommendations" (no filter)
+            // But filter the LIST rooms strictly.
+            const filteredAlt = SEARCH_ALT_ROOMS; 
             const filteredList = SEARCH_LIST_ROOMS.filter(r => r.title.includes(searchQuery));
             
+            // Logic: Show results if we have matches OR if we have alternatives (which we always do now)
             if (filteredAlt.length > 0 || filteredList.length > 0) {
                 tabContent = (
                     <>
@@ -494,20 +502,18 @@ const App = () => {
                                 {filteredAlt.map(room => <CommonRoomCard key={room.id} room={room} type="blue" onBtn1Click={() => goDetail(room)} onBtn2Click={() => clickReserveButton(room)} />)}
                             </>
                         )}
-                        {filteredList.length > 0 && (
+                        {filteredList.length > 0 ? (
                             <>
                                 <div className="search-section-title search-section-title-margin"><span>가능한 공간 리스트</span></div>
                                 {filteredList.map(room => <CommonRoomCard key={room.id} room={room} type="green" onBtn1Click={() => goDetail(room)} onBtn2Click={() => clickReserveButton(room)} />)}
                             </>
+                        ) : (
+                            // Show message if List is empty (but Alt is shown above)
+                            <div className="search-no-results" style={{padding: '20px', textAlign:'center', color:'#888', fontSize:'13px'}}>
+                                "{searchQuery}"에 대한 정확한 매칭이 없습니다.<br/>위의 추천 공간을 확인해보세요.
+                            </div>
                         )}
                     </>
-                );
-            } else {
-                tabContent = (
-                    <div className="search-no-results">
-                        <div className="search-no-results-icon">🔍</div>
-                        <div className="search-no-results-text">"{searchQuery}"에 대한 검색 결과가 없습니다.</div>
-                    </div>
                 );
             }
         }
@@ -569,7 +575,6 @@ const App = () => {
                     <div className="week-row">{WEEK_DAYS.map((d, i) => (<div key={i} className={`day-item ${d.isSelected ? 'selected' : ''}`}><span className={`day-name ${d.isRed?'red':''} ${d.isBlue?'blue':''}`}>{d.day}</span><span className="day-number">{d.date}</span></div>))}</div>
                 </div>
                 <div className="list-section">
-                    {/* Using the Custom HomeListCard here */}
                     {HOME_LIST_ROOMS.map(room => (
                         <HomeListCard key={room.id} room={room} onClick={() => goDetail(room)} />
                     ))}
@@ -599,7 +604,5 @@ const App = () => {
             <NavBar />
         </div>
     );
-};
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+};const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
