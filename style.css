@@ -1,19 +1,15 @@
-/* style.css */
+/* CSS 변수 */
 :root {
-    /* CHANGED: Updated from Mint Green to the App Blue from the screenshot */
     --primary: #4a80f0; 
     --primary-dark: #2c5bb8;
-    
     --bg-gray: #f8f9fa;
     --text-dark: #333;
     --text-gray: #888;
     --red-alert: #e53935;
     --white: #ffffff;
     --slate-btn: #124170;
-    
-    /* CHANGED: Adjusted backgrounds to match the blue theme */
     --light-blue-bg: #eef6fc;
-    --light-mint-bg: #e3f2fd; /* Now a very light blue instead of mint */
+    --light-mint-bg: #e3f2fd;
   }
   
   * {
@@ -47,7 +43,7 @@
     flex-shrink: 0;
   }
   
-  /* --- HEADER --- */
+  /* 헤더 */
   .header-wrapper {
     background: white;
     padding: 10px 20px;
@@ -62,15 +58,17 @@
     margin-bottom: 15px;
     margin-top: 20px;
   }
-  /* CHANGED: Logo color to match primary blue */
   .brand-logo { font-size: 15px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 0px; }
   .header-icons { display: flex; gap: 15px; font-size: 24px; color: #333; }
+  .header-icons .icon-img {
+    width: 20px;
+    height: 20px;
+  }
   
   .search-container { position: relative; width: 100%; }
   .search-input-fancy {
     width: 100%;
     padding: 10px 40px;
-    /* CHANGED: Border color to primary blue */
     border: 1px solid var(--primary);
     border-radius: 4px;
     font-size: 14px;
@@ -90,7 +88,7 @@
   .search-icon-left { left: 10px; font-size: 20px; }
   .search-icon-right { right: 10px; }
   
-  /* --- CONTENT AREA --- */
+  /* 콘텐츠 영역 */
   .content {
     flex: 1;
     overflow-y: auto;
@@ -100,7 +98,7 @@
   }
   .content::-webkit-scrollbar { display: none; }
   
-  /* --- FILTER OVERLAY STYLES --- */
+  /* 필터 오버레이 */
   .filter-overlay {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0; 
@@ -111,11 +109,9 @@
   
   .filter-box {
       background: white;
-      /* CHANGED: Border color to primary blue */
       border: 1px solid var(--primary);
       border-radius: 15px;
       padding: 20px;
-    
       display: flex;
       flex-direction: column;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -153,11 +149,11 @@
       transition: 0.2s;
   }
   
-  /* CHANGED: Active chip color from Green to Primary Blue */
+  /* 활성 필터 칩 */
   .filter-chip-btn.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
   }
   
   .filter-actions-row {
@@ -176,13 +172,12 @@
       font-size: 14px;
   }
 
-  /* --- DETAIL PAGE STYLES --- */
+  /* 상세 페이지 */
 .detail-content-wrapper {
     padding: 20px;
     padding-bottom: 90px; 
 }
 
-/* Header & Top Section */
 .detail-top-row {
     display: flex;
     gap: 15px;
@@ -203,7 +198,6 @@
     justify-content: flex-start;
 }
 .detail-room-name-badge {
-    /* CHANGED: Light background variable now points to light blue */
     background: var(--light-mint-bg);
     color: #333;
     padding: 8px 12px;
@@ -226,7 +220,7 @@
     font-size: 13px;
 }
 
-/* Section Labels */
+/* 섹션 라벨 */
 .detail-section-label {
     display: inline-block;
     background: #546e7a; 
@@ -239,24 +233,42 @@
     margin-top: 15px;
 }
 
-/* Gray Content Boxes */
+/* 정보 박스 */
 .detail-info-box {
     background: #eef6f7;
     border-radius: 8px;
     padding: 15px;
-    font-size: 13px;
+    font-size: 10px;
     color: #333;
     line-height: 1.6;
     margin-bottom: 10px;
 }
 
-/* Facilities & Environment Grid */
+/* 설비/환경 그리드 */
 .fac-env-container {
     display: flex;
     justify-content: space-between;
     gap: 10px;
 }
-.fac-column, .env-column {
+.fac-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fac-tag-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.fac-tag-wrapper .fac-tag {
+    flex: 0 0 calc(50% - 4px);
+    min-width: 0;
+}
+
+.env-column {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -269,40 +281,142 @@
     color: #333;
 }
 
-/* Tags */
+/* 태그 */
 .fac-tag {
-    /* CHANGED: Tag background to primary blue */
     background: var(--primary);
     color: white;
     padding: 6px 10px;
     border-radius: 20px;
-    font-size: 11px;
+    font-size: 9px;
+    margin-bottom: 2px;
     text-align: center;
     font-weight: bold;
 }
 
-/* Bubbles (Slate) */
+/* 환경 버블 */
 .env-bubble {
-    background: #546e7a; 
+    background: #2A4169; 
     color: white;
-    padding: 8px 10px;
-    border-radius: 20px;
-    font-size: 10px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 8px;
     text-align: center;
-    line-height: 1.3;
+    line-height: 1.4;
+    white-space: nowrap;
+    margin-bottom: 2px;
+    font-weight: normal;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Rules List */
+/* 규정 목록 */
 .rules-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    font-size: 11px;
+    font-size: 9px;
     color: #333;
-    line-height: 1.8;
+    line-height: 1.5;
 }
 
-/* Bottom Action Buttons */
+/* 인라인 스타일을 CSS로 이동 */
+.back-icon-img {
+    position: absolute;
+    left: 20px;
+}
+
+.detail-user-count {
+    margin-top: 5px;
+}
+
+.btn-action-reserve {
+    background: #2A4169;
+}
+
+.btn-action-cancel-red {
+    background: #e53935;
+}
+
+.btn-action-confirm {
+    background: #227CD6;
+}
+
+.action-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.detail-content-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.check-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.success-title {
+    margin-bottom: 30px;
+}
+
+.detail-info-box-full {
+    width: 100%;
+}
+
+.detail-info-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.detail-action-area-full {
+    width: 100%;
+    margin-top: auto;
+}
+
+.logo-icon-margin {
+    margin-right: 5px;
+}
+
+.menu-icon-pointer {
+    cursor: pointer;
+}
+
+.splash-logo {
+    width: 110px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.search-section-title-margin {
+    margin-top: 10px;
+}
+
+.content-margin-top {
+    margin-top: 10px;
+}
+
+.content-inner-padding {
+    padding-top: 10px;
+}
+
+.empty-message {
+    padding: 40px;
+    text-align: center;
+    color: #999;
+}
+
+.mini-fav-icon-pointer {
+    cursor: pointer;
+}
+
+/* 액션 버튼 */
 .detail-action-area {
     margin-top: 20px;
     display: flex;
@@ -339,22 +453,12 @@
     justify-content: center;
     gap: 5px;
 }
-/* --- STAR STYLES --- */
+/* 별 아이콘 */
 .search-card {
     position: relative; 
 }
 
-.star-icon-btn {
-    position: absolute;
-    top: 12px;
-    right: 10px;
-    font-size: 22px;
-    cursor: pointer;
-    z-index: 10; 
-    color: #ccc; 
-    transition: color 0.2s;
-}
-/* --- CUSTOM ICON STYLES --- */
+/* 아이콘 스타일 */
 
 .icon-img {
     width: 30px;
@@ -400,14 +504,10 @@
     height: 20px;
     cursor: pointer;
 }
-.star-icon-btn.active {
-    color: #ffca28; 
-}
   .btn-filter-reset { background: #e0e0e0; color: #333; }
-  /* CHANGED: Apply button to primary blue */
   .btn-filter-apply { background: var(--primary); color: white; }
   
-  /* --- OTHER COMPONENTS --- */
+  /* 기타 컴포넌트 */
   .horizontal-section { background: #eef6f7; padding: 20px; position: relative; }
   .section-header-row { display: flex; justify-content: flex-end; margin-bottom: 5px; }
   .see-more { font-size: 12px; color: #888; text-decoration: underline; cursor: pointer; }
@@ -418,37 +518,45 @@
   .mini-card-img { height: 100px; width: 100%; object-fit: cover; background: #eee; position: relative; }
   .mini-card-info { padding: 10px; display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
   .mini-card-title { font-size: 13px; font-weight: bold; color: #333; margin-bottom: 10px; line-height: 1.3; }
-  /* CHANGED: Reserve button to primary blue */
   .btn-mini-reserve { background: var(--primary); color: white; border: none; border-radius: 4px; padding: 8px 0; font-size: 12px; font-weight: bold; width: 100%; cursor: pointer; }
-  .mini-fav-icon { position: absolute; top: 8px; right: 8px; color: orange; font-size: 16px; }
+  .mini-fav-icon { position: absolute; top: 8px; right: 8px; width: 20px; height: 20px; z-index: 10; }
   
-  /* Calendar & List */
+  /* 달력 & 리스트 */
   .date-section { text-align: center; padding: 20px 0; background: white; }
   .year-month { font-size: 18px; font-weight: bold; margin-bottom: 15px; }
-  .week-row { display: flex; justify-content: space-between; padding: 0 20px; background: #eef6f7; padding-top: 15px; padding-bottom: 15px; }
+  .week-row { display: flex; justify-content: space-between; padding: 0 20px; background: white; padding-top: 15px; padding-bottom: 15px; }
+  
+  /* 미니 카드 */
+  .mini-card-img-inner {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .mini-card-label {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    background: rgba(255,255,255,0.8);
+    font-size: 10px;
+    padding: 2px 4px;
+    border-radius: 2px;
+  }
   .day-item { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
   .day-name { font-size: 11px; color: #888; }
   .day-name.red { color: #e57373; }
   .day-name.blue { color: #64b5f6; }
   .day-number { font-size: 14px; font-weight: bold; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 6px; }
-  /* CHANGED: Selected day border/text to primary blue */
+  /* 선택된 날짜 */
   .day-item.selected .day-number { background: white; border: 2px solid var(--primary); color: #333; }
   .day-item.selected .day-name { font-weight: bold; }
   
-  .list-card { background: #eef6f7; border-radius: 10px; padding: 10px; display: flex; gap: 12px; margin-bottom: 15px; }
-  .list-img { width: 100px; height: 100px; border-radius: 8px; object-fit: cover; background: #ddd; }
-  .list-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .list-title { font-size: 13px; font-weight: bold; margin-bottom: 4px; color: #333; }
-  .list-time { font-size: 12px; font-weight: bold; margin-bottom: 6px; color: #333; }
-  .list-details { font-size: 11px; color: #555; line-height: 1.5; }
-  .text-red { color: red; }
   
-  /* Search Results */
+  /* 검색 결과 */
   .search-section-title { padding: 15px 20px 5px 20px; font-size: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
   .sort-badge { background: #90a4ae; color: white; font-size: 10px; padding: 3px 8px; border-radius: 12px; cursor: pointer; }
   .search-card { margin: 10px 20px; padding: 15px; border-radius: 12px; display: flex; flex-direction: column; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
   .search-card.blue { background-color: var(--light-blue-bg); }
-  /* CHANGED: Green card background to light blue/mint variable */
   .search-card.green { background-color: var(--light-mint-bg); }
   .sc-top { display: flex; gap: 12px; margin-bottom: 12px; }
   .sc-img { width: 90px; height: 90px; border-radius: 8px; background: #ccc; object-fit: cover; }
@@ -456,95 +564,75 @@
   .sc-title { font-weight: bold; font-size: 14px; margin-bottom: 2px; color: #222; }
   .sc-btns { display: flex; gap: 10px; }
   .btn-slate { flex: 1; background: var(--slate-btn); color: white; border: none; padding: 8px; border-radius: 5px; font-weight: bold; font-size: 12px; cursor: pointer; }
-  /* CHANGED: Mint button to primary blue */
   .btn-mint { flex: 1; background: var(--primary); color: white; border: none; padding: 8px; border-radius: 5px; font-weight: bold; font-size: 12px; cursor: pointer; }
   .btn-more-wide { width: 90%; margin: 10px auto 20px auto; display: block; background: #e0e0e0; color: #555; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
   
-  /* Favorites / History Headers */
-  .fav-header-simple, .history-header {
+  /* 즐겨찾기 / 내역 헤더 */
+  .fav-header-simple {
     margin-top: 30px; padding: 15px 20px; font-size: 18px; font-weight: bold; text-align: center; position: relative; background: white;
   }
-  .fav-header-simple .back-icon, .history-header .back-icon { position: absolute; left: 20px; cursor: pointer; font-size: 20px; }
   .fav-section-label, .recent-section-label { padding: 20px 20px 10px 20px; font-size: 16px; font-weight: bold; color: #333; }
   .recent-section-label { border-bottom: 1px solid #ddd; margin: 0 20px; padding-left: 0; }
-  .star-icon { position: absolute; right: 20px; top: 20px; font-size: 20px; }
-  .star-orange { color: #ff9800; }
-  .star-gray { color: #ccc; }
   
-  /* History Tabs */
+  /* 내역 탭 */
   .history-tabs { display: flex; background: white; padding: 0 20px; border-bottom: 1px solid #f0f0f0; }
   .history-tab-item { padding: 15px 0; margin-right: 25px; font-size: 16px; color: #999; cursor: pointer; }
   .history-tab-item.active { color: #333; font-weight: bold; }
   
-  /* Nav Bar */
+  /* 네비게이션 바 */
   .nav-bar { height: 70px; background: #fcfcfc; display: flex; justify-content: space-around; align-items: flex-start; padding-top: 10px; position: absolute; bottom: 0; width: 100%; z-index: 100; border-top: 1px solid #eee; }
   .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #999; cursor: pointer; width: 25%; }
   .nav-item.active { color: #455a64; font-weight: bold; }
-  .nav-icon { font-size: 24px; margin-bottom: 4px; }
   
-  /* Splash */
+  /* 스플래시 화면 */
   .splash-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2c5bb8; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 200; }
-  /* CHANGED: Logo text to primary blue */
-  .logo-text { color: var(--primary); font-size: 24px; font-weight: bold; margin-top: 20px;}
-  /* Add this to the very bottom of your style.css */
 
-/* --- MOBILE FULL SCREEN FIX --- */
-/* --- MOBILE FULL SCREEN & NOTCH FIX --- */
+/* 모바일 반응형 */
 @media only screen and (max-width: 600px) {
 
     body {
-        /* This ensures the background behind the notch is white */
         background-color: white; 
-        /* Prevents the whole page from bouncing */
         overscroll-behavior-y: none; 
     }
 
     .app-container {
         width: 100% !important;
-        height: 100dvh !important; /* 'dvh' handles the mobile address bar better than 'vh' */
+        height: 100dvh !important;
         border: none !important;
         border-radius: 0 !important;
         box-shadow: none !important;
-        
-        /* Reset margins/padding */
         margin: 0 !important;
-        padding-top: env(safe-area-inset-top); /* Push content down below notch */
-        padding-bottom: 0; /* Remove bottom padding here, we handle it in content */
-        
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: 0;
         display: flex;
         flex-direction: column;
     }
 
-    /* FIX: Make the Navbar STICKY forever */
     .nav-bar {
-        position: fixed; /* Stick to the glass */
+        position: fixed;
         bottom: 0;
         left: 0;
         width: 100%;
         z-index: 1000;
         background: #fcfcfc;
         border-top: 1px solid #eee;
-        
-        /* Add padding for the iPhone Home Swipe Bar */
         padding-bottom: calc(10px + env(safe-area-inset-bottom));
-        height: auto; /* Let it grow to fit the padding */
+        height: auto;
     }
     
-    /* Adjust content so it doesn't get hidden behind the sticky navbar */
     .content {
-        /* Add extra padding at bottom = Navbar height + extra space */
         padding-bottom: 100px !important; 
     }
 }
-/* --- CONFIRMATION MODAL STYLES --- */
+/* 확인 모달 */
 .modal-overlay {
     position: fixed;
     top: 0; 
     left: 0; 
     width: 100%; 
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
-    z-index: 2000; /* Sit on top of everything */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -570,7 +658,7 @@
 
 .btn-modal-cancel {
     flex: 1;
-    background-color: #546e7a; /* Slate Blue from your palette */
+    background-color: #546e7a;
     color: white;
     padding: 12px;
     border-radius: 8px;
@@ -582,7 +670,7 @@
 
 .btn-modal-confirm {
     flex: 1;
-    background-color: #227CD6; /* Green from your palette */
+    background-color: #227CD6;
     color: white;
     padding: 12px;
     border-radius: 8px;
@@ -591,60 +679,154 @@
     font-size: 16px;
     cursor: pointer;
 }
-/* --- CUSTOM HOME LIST CARD --- */
-.home-list-card {
+.text-red {
+    color: #e53935;
+    font-weight: bold;
+}
+
+.text-blue {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* 홈 화면 방 카드 */
+.list-section {
     background: white;
+    padding: 15px;
+}
+
+.home-room-card {
+    background: white;
+    border: 1px solid #e0e0e0;
     border-radius: 12px;
     padding: 15px;
     margin-bottom: 15px;
     display: flex;
     gap: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    cursor: pointer; /* Indicates it's clickable */
-    transition: transform 0.1s;
+    position: relative;
 }
 
-.home-list-card:active {
-    transform: scale(0.98);
-}
-
-.hl-img {
-    width: 110px;
-    height: 110px;
+.home-room-img {
+    width: 120px;
+    height: 120px;
     border-radius: 8px;
     object-fit: cover;
-    background: #f0f0f0;
     flex-shrink: 0;
 }
 
-.hl-content {
+.home-room-content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 8px;
+    min-width: 0;
 }
 
-.hl-title {
+.home-room-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.home-room-time {
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
+}
+
+.home-room-detail {
+    font-size: 12px;
+    color: #666;
+}
+
+/* 검색 페이지 */
+.recent-search-header {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recent-search-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.recent-search-delete-all {
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.recent-search-delete-all:hover {
+    color: #333;
+}
+
+.recent-search-delete-all:active {
+    color: var(--primary);
+}
+
+/* 최근 검색 장소 목록 컨테이너 */
+.recent-search-list {
+    padding: 0 15px;
+}
+
+/* 최근 검색 항목 */
+.recent-search-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.recent-search-item:hover {
+    background-color: #eeeeee;
+}
+
+.recent-search-item:active {
+    transform: scale(0.98);
+    background-color: #e0e0e0;
+}
+
+.recent-search-icon {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.recent-search-term {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 검색 결과 없음 메시지 */
+.search-no-results {
+    padding: 40px;
+    text-align: center;
+    color: #999;
+}
+
+.search-no-results-icon {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.search-no-results-text {
+    font-size: 14px;
+}
+
+/* 검색 결과 섹션 제목 */
+.search-results-title {
+    padding: 15px 15px 10px;
     font-size: 15px;
     font-weight: bold;
     color: #333;
-    margin-bottom: 4px;
-}
-
-.hl-time {
-    font-size: 14px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.hl-details {
-    font-size: 12px;
-    color: #666;
-    line-height: 1.6;
-}
-
-.text-red {
-    color: #e53935;
-    font-weight: bold;
 }
