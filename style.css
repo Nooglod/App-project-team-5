@@ -175,7 +175,7 @@
   /* 상세 페이지 */
 .detail-content-wrapper {
     padding: 20px;
-    padding-bottom: 90px; 
+    padding-bottom: 110px; 
 }
 
 .detail-top-row {
@@ -941,4 +941,14 @@
 
 .btn-success-home:active {
     transform: scale(0.98);
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.content::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.content {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
